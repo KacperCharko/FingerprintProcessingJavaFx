@@ -22,7 +22,7 @@ public class PrimaryController {
     @FXML
     public void loadFile() throws IOException {
         Stage stage = new Stage();
-        writableImage = utils.greyScaleImage.returnGrayScaleImage(FileReader.loadFile(stage));
+        writableImage = utils.otsuBinarization.otsuMethod(FileReader.loadFile(stage));
         imageView.setImage(writableImage);
     }
     @FXML
