@@ -8,7 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import main.App;
+import k3m.ArrayOfZerosAndOnes;
+
 
 public class PrimaryController {
     @FXML
@@ -28,8 +29,8 @@ public class PrimaryController {
     @FXML
     public void loadFile2() throws IOException {
         Stage stage = new Stage();
-        WritableImage writableImage = FileReader.loadFile(stage);
-        imageView1.setImage(writableImage);
+        int[][] array = k3m.ArrayOfZerosAndOnes.getArrayFromImage(writableImage);
+      //  imageView1.setImage(writable);
     }
     @FXML
     public void handleMenuBar(KeyEvent keyEvent) {
