@@ -17,9 +17,9 @@ public class ArrayOfZerosAndOnes {
            for (int j = 0; j < x; j++) {
                int[] RGB = getColor(image,i,j);
                if(RGB[0] > 0)
-                   array[i][j] = 1;
-               else
                    array[i][j] = 0;
+               else
+                   array[i][j] = 1;
            }
        }
        return array;

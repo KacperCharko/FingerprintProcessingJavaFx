@@ -44,4 +44,14 @@ public class utils {
 
         return writableImage;
     }
+
+    public static void zliczanie(int[] array){
+        int[] tab = new int[256];
+        for(int i = 0; i<array.length; i++){
+            tab[array[i]]=1;
+        }
+        for(int i = 0; i<tab.length; i++){
+            System.out.print(tab[i]+",");
+        }
+    }
 }

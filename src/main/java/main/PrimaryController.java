@@ -9,6 +9,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import k3m.ArrayOfZerosAndOnes;
+import k3m.K3mWrapper;
 
 
 public class PrimaryController {
@@ -29,8 +30,7 @@ public class PrimaryController {
     @FXML
     public void loadFile2() throws IOException {
         Stage stage = new Stage();
-        int[][] array = k3m.ArrayOfZerosAndOnes.getArrayFromImage(writableImage);
-      //  imageView1.setImage(writable);
+        K3mWrapper.processAlgorithm(writableImage);
     }
     @FXML
     public void handleMenuBar(KeyEvent keyEvent) {
