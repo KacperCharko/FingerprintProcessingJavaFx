@@ -14,8 +14,7 @@ import java.io.IOException;
 
 public class FileReader {
 
-
-    public static WritableImage loadFile(Stage stage){
+    public static File chooseFile(Stage stage){
         File file = null;
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Szukaj mnie");
@@ -24,7 +23,11 @@ public class FileReader {
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
-        file = fileChooser.showOpenDialog(stage);
+        return file = fileChooser.showOpenDialog(stage);
+    }
+
+    public static WritableImage loadFile(File file){
+
         if (file != null){
             BufferedImage buffered=null;
             try {

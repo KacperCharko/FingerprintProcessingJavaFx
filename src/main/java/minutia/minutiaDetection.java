@@ -4,12 +4,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import k3m.ArrayOfZerosAndOnes;
 import k3m.Point;
+import main.PrimaryController;
 
 import java.util.ArrayList;
 
 public class minutiaDetection {
 
-    public static WritableImage detect(Image image){
+    public static Image detect(Image image){
 
         int[][] array = ArrayOfZerosAndOnes.getArrayFromImage(image);
         ArrayList<Point> arrayList = new ArrayList<>();
@@ -21,11 +22,13 @@ public class minutiaDetection {
             for (int j=15; j< array[0].length-15; j++) {
                 if(array[i][j] >0)
                 array = lookForMinutia(i,j,array,arrayList);
-             
+
             }
 
         }
-        System.out.println(arrayList.get(3).x);
+        array = minutiaReduction.reduceMinutia(array,arrayList);
+        Image fianl = produceImageFromArray.fianlImg(array,image);
+        PrimaryController.fin=fianl;
         return produceImageFromArray.produceImage(array,image);
     }
 

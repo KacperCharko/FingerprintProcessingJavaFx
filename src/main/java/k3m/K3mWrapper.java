@@ -1,5 +1,6 @@
 package k3m;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import org.apache.commons.lang3.SerializationUtils;
 
@@ -32,7 +33,7 @@ public class K3mWrapper {
     private static ArrayList<Point> border;
     private static boolean wasChanged = true;
 
-    public static WritableImage processAlgorithm (WritableImage image){
+    public static Image processAlgorithm (Image image){
 
         int[][] array = ArrayOfZerosAndOnes.getArrayFromImage(image);
 
