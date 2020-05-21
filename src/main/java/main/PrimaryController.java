@@ -31,6 +31,7 @@ public class PrimaryController {
     public void loadFile2() throws IOException {
        // Stage stage = new Stage();
         WritableImage writableImage1 = K3mWrapper.processAlgorithm(writableImage);
+        writableImage1 = minutia.minutiaDetection.detect(writableImage1);
         imageView1.setImage(writableImage1);
     }
     @FXML

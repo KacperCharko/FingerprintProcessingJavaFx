@@ -51,7 +51,7 @@ public class K3mWrapper {
                     if(array[i][j]==2)
                         array[i][j]=1;
                 }
-               
+
             }
         }
         array = processLastPhase(array);
