@@ -29,8 +29,9 @@ public class PrimaryController {
     }
     @FXML
     public void loadFile2() throws IOException {
-        Stage stage = new Stage();
-        K3mWrapper.processAlgorithm(writableImage);
+       // Stage stage = new Stage();
+        WritableImage writableImage1 = K3mWrapper.processAlgorithm(writableImage);
+        imageView1.setImage(writableImage1);
     }
     @FXML
     public void handleMenuBar(KeyEvent keyEvent) {

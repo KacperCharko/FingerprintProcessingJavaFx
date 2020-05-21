@@ -1,6 +1,7 @@
 package k3m;
 
 import javafx.scene.image.WritableImage;
+import org.apache.commons.lang3.SerializationUtils;
 
 import java.util.ArrayList;
 
@@ -26,70 +27,92 @@ public class K3mWrapper {
     };
 
     private static int[] wages = {128,1,2,64,0,4,32,16,8};
+     //private static int[] wages = {128,64,32,1,0,16,2,4,8};
 
-    private ArrayList<Point> border;
-
+    private static ArrayList<Point> border;
+    private static boolean wasChanged = true;
 
     public static WritableImage processAlgorithm (WritableImage image){
 
-        boolean wasChanged = true;
-
         int[][] array = ArrayOfZerosAndOnes.getArrayFromImage(image);
 
-
         while(wasChanged){
+
             wasChanged = false;
+
             array = processFirstPhase(array);
 
+            for (int i = 0; i < phases.length; i++){
+                array = processPhase(border,array,phases[i]);
+            }
 
+            for(int i = 1; i <array.length-1; i++){
+                for (int j=1; j< array[0].length-1; j++) {
+                    if(array[i][j]==2)
+                        array[i][j]=1;
+                }
+               
+            }
         }
+        array = processLastPhase(array);
 
-        return null;
+        return ImageFromArray.getImageFromArray(array);
     }
 
     private static int[][] processFirstPhase(int[][] array){
+        border = new ArrayList<>();
+        int neighborhoodWages=0;
+        for(int i = 1; i <array.length-1; i++){
+            for (int j=1; j< array[0].length-1; j++) {
+                if (array[i][j] > 0) {
+                    neighborhoodWages = calculateNeighborhood(i, j, array);
+                    if (phase0[neighborhoodWages] > 0) {
+                        array[i][j] = 5;
+                        border.add(new Point(i, j));
+                    }
+                }
+            }
+        }
+        return array;
+    }
+    private static int[][] processLastPhase(int[][] array){
+
         int neighborhoodWages=0;
         for(int i = 1; i <array.length-1; i++){
             for (int j=1; j< array[0].length-1; j++) {
                 if(array[i][j]>0){
                     neighborhoodWages= calculateNeighborhood(i,j,array);
-               // System.out.println(neighborhoodWages);
-                if(phase0[neighborhoodWages]>0){
-                    array[i][j] = 2;
-                    border.add()
+                    if(lastPhase[neighborhoodWages]>0){
+                        array[i][j] = 0;
+                    }
+                }
+            }
 
-                }}
-                //System.out.print(array[i][j]);
-            }
-           //System.out.println();
-        }
-        return array;
-    }
-    private static int[][] processPhase(int[][] array){
-        int neighborhoodWages=0;
-        for(int i = 1; i <array.length-1; i++){
-            for (int j=1; j< array[0].length-1; j++) {
-                if(array[i][j]>0){
-                    neighborhoodWages= calculateNeighborhood(i,j,array);
-                    // System.out.println(neighborhoodWages);
-                    if(phase0[neighborhoodWages]>0){
-                        array[i][j] = 2;
-                    }}
-                //System.out.print(array[i][j]);
-            }
-            //System.out.println();
         }
         return array;
     }
 
+    private static int[][] processPhase(ArrayList<Point> list, int[][] array, int[] phase){
+        int neighborhoodWages;
 
-    private static  int calculateNeighborhood(int x, int y, int[][] array){
+        for(Point point:list){
+            neighborhoodWages= calculateNeighborhood(point.x,point.y,array);
+            if(phase[neighborhoodWages]>0){
+                array[point.x][point.y] = 0;
+                wasChanged = true;
+
+            }}
+        return array;
+        }
+
+
+        private static  int calculateNeighborhood(int x, int y, int[][] array){
         int counter=0;
         int wage=0;
-        //System.out.println(x + " " + y);
+
         for(int i = x-1; i<=x+1; i++){
             for(int j = y-1; j<=y+1; j++){
-                if(array[i][j]>0){
+                if(array[i][j]>0 &&array[x][y]>0){
                     wage+=wages[counter];
                 }
                 counter++;
